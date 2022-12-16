@@ -1,6 +1,7 @@
 package pl.zimnyciechan.uploadsimulator.ui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -27,6 +28,8 @@ public class UploadSimulatorApp extends Application {
 
     private int clientCount = 0;
     private HBox sendingBox, queueBox;
+
+    private boolean simulationRunning = false;
 
 
     public static void main(String[] args) throws InterruptedException {
@@ -99,7 +102,7 @@ public class UploadSimulatorApp extends Application {
         stepButton.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-          processStep();
+                processStep();
             }
         });
 
@@ -121,16 +124,17 @@ public class UploadSimulatorApp extends Application {
         grid.add(addClientButton, 2, 12);
 
 
-        Button testButton = new Button("Test");
-        testButton.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
-            ClientModel tester = (ClientModel) sendingBox.getChildren().get(0);
-            tester.setUploaded(tester.getUploaded()+20);
-            if(tester.isFinished()){
-                processStep();
-            }
-
+        Button startButton = new Button("Start");
+        startButton.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            startSimulation();
         });
-        grid.add(testButton, 2, 13);
+        grid.add(startButton, 2, 13);
+
+        Button stopButton = new Button("Stop");
+        stopButton.addEventFilter(MouseEvent.MOUSE_CLICKED, mouseEvent -> {
+            stopSimulation();
+        });
+        grid.add(stopButton, 2, 14);
 
 
         Scene scene = new Scene(grid, 1500, 800);
@@ -141,17 +145,22 @@ public class UploadSimulatorApp extends Application {
     }
 
     private void processStep() {
-        if (sendingBox.getChildren().size() > 0) {
-            sendingBox.getChildren().remove(0);
-        }
-        while (sendingBox.getChildren().size() < 5 && queueBox.getChildren().size() > 0) {
-            var nextClient = queueBox.getChildren().get(0);
-            if (nextClient instanceof ClientModel) {
-                ((ClientModel) nextClient).setColor(Color.YELLOW);
-                sendingBox.getChildren().add(nextClient);
-                queueBox.getChildren().remove(nextClient);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if (sendingBox.getChildren().size() > 0) {
+                    sendingBox.getChildren().remove(0);
+                }
+                while (sendingBox.getChildren().size() < 5 && queueBox.getChildren().size() > 0) {
+                    var nextClient = queueBox.getChildren().get(0);
+                    if (nextClient instanceof ClientModel) {
+                        ((ClientModel) nextClient).setColor(Color.YELLOW);
+                        sendingBox.getChildren().add(nextClient);
+                        queueBox.getChildren().remove(nextClient);
+                    }
+                }
             }
-        }
+        });
     }
 
     private Node generateRectangle(String textString, Paint fill, double rectSize) {
@@ -163,5 +172,40 @@ public class UploadSimulatorApp extends Application {
         rect.setStroke(Color.GRAY);
         Text text = new Text(textString);
         return new StackPane(rect, text);
+    }
+
+    private void startSimulation() {
+        if (simulationRunning) {
+            return;
+        }
+        simulationRunning = true;
+        Thread thread = new Thread(new SimulationProcess());
+        thread.start();
+    }
+
+    private void stopSimulation() {
+        simulationRunning = false;
+    }
+
+    class SimulationProcess implements Runnable {
+        @Override
+        public void run() {
+            while (simulationRunning) {
+                if(sendingBox.getChildren().size()==0){
+                    stopSimulation();
+                    return;
+                }
+                ClientModel tester = (ClientModel) sendingBox.getChildren().get(0);
+                tester.setUploaded(tester.getUploaded() + 20);
+                if (tester.isFinished()) {
+                    processStep();
+                }
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 }
