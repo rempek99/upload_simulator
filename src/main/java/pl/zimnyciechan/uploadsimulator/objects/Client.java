@@ -1,8 +1,7 @@
-package pl.remplewicz.uploadsimulator.objects;
+package pl.zimnyciechan.uploadsimulator.objects;
 
-import lombok.Getter;
 import lombok.ToString;
-import pl.remplewicz.uploadsimulator.resources.Storage;
+import pl.zimnyciechan.uploadsimulator.resources.Storage;
 
 @ToString
 public class Client extends AbstractDevice {

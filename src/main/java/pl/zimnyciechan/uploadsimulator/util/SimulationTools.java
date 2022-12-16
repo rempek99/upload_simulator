@@ -1,6 +1,6 @@
-package pl.remplewicz.uploadsimulator.util;
+package pl.zimnyciechan.uploadsimulator.util;
 
-import pl.remplewicz.uploadsimulator.resources.FileResource;
+import pl.zimnyciechan.uploadsimulator.resources.FileResource;
 
 public class SimulationTools {
 

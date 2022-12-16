@@ -1,7 +1,7 @@
-package pl.remplewicz.uploadsimulator.actions;
+package pl.zimnyciechan.uploadsimulator.actions;
 
-import pl.remplewicz.uploadsimulator.objects.AbstractDevice;
-import pl.remplewicz.uploadsimulator.resources.FileResource;
+import pl.zimnyciechan.uploadsimulator.objects.AbstractDevice;
+import pl.zimnyciechan.uploadsimulator.resources.FileResource;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
