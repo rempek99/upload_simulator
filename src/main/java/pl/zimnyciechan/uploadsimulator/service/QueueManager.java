@@ -2,6 +2,7 @@ package pl.zimnyciechan.uploadsimulator.service;
 
 import pl.zimnyciechan.uploadsimulator.model.objects.Client;
 
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -21,6 +22,7 @@ public class QueueManager {
 
     public void addClientToQueue(Client client) {
         clientSet.add(client);
+        client.setStampAtQueue(Instant.now());
     }
 
     public Set<Client> getClientsQueue() {
@@ -35,7 +37,7 @@ public class QueueManager {
 
     private Client computeNext() {
         Iterator<Client> iterator = clientSet.iterator();
-        if(iterator.hasNext()){
+        if (iterator.hasNext()) {
             //TODO zaimplementować logikę wyciągania kolejnego klineta z kolejki
             return iterator.next();
         }

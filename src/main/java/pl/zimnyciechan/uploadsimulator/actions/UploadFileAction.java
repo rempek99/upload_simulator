@@ -4,6 +4,7 @@ import pl.zimnyciechan.uploadsimulator.model.objects.AbstractDevice;
 import pl.zimnyciechan.uploadsimulator.model.resources.FileResource;
 
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class UploadFileAction implements Runnable {
@@ -22,7 +23,7 @@ public class UploadFileAction implements Runnable {
 
     @Override
     public void run() {
-        final List<FileResource> filesToSend = sender.getStorage().getFilesCollection();
+        final Set<FileResource> filesToSend = sender.getStorage().getFilesCollection();
         AtomicReference<Double> summaryFilesSize = new AtomicReference<>(0.0);
         filesToSend.forEach(f -> {
             summaryFilesSize.updateAndGet(v -> v + f.getSize());
