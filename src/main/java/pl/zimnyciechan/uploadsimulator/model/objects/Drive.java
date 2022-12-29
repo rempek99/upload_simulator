@@ -1,4 +1,4 @@
-package pl.zimnyciechan.uploadsimulator.objects;
+package pl.zimnyciechan.uploadsimulator.model.objects;
 
 public class Drive extends AbstractDevice {
 

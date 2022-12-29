@@ -1,6 +1,6 @@
 package pl.zimnyciechan.uploadsimulator.util;
 
-import pl.zimnyciechan.uploadsimulator.resources.FileResource;
+import pl.zimnyciechan.uploadsimulator.model.resources.FileResource;
 
 public class SimulationTools {
 

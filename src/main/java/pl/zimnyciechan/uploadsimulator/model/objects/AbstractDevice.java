@@ -1,8 +1,8 @@
-package pl.zimnyciechan.uploadsimulator.objects;
+package pl.zimnyciechan.uploadsimulator.model.objects;
 
 import lombok.Getter;
 import lombok.ToString;
-import pl.zimnyciechan.uploadsimulator.resources.Storage;
+import pl.zimnyciechan.uploadsimulator.model.resources.Storage;
 
 @ToString
 @Getter

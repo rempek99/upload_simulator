@@ -1,4 +1,4 @@
-package pl.zimnyciechan.uploadsimulator.resources;
+package pl.zimnyciechan.uploadsimulator.model.resources;
 
 import lombok.Getter;
 import lombok.ToString;
