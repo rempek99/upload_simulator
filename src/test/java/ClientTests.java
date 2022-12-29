@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 
 public class ClientTests {
 
-    private static Client testClient = new Client("tester1",
+    private static final Client testClient = new Client("tester1",
             new Storage(Set.of(
                     new FileResource("file1", 120.0),
                     new FileResource("file2", 25.0),

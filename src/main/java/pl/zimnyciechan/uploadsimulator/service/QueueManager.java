@@ -31,7 +31,9 @@ public class QueueManager {
 
     public Client getNextClient() {
         Client client = computeNext();
-        clientSet.remove(client);
+        if (client!=null && client.getStorage().getFilesCollection().size() == 1) {
+            clientSet.remove(client);
+        }
         return client;
     }
 

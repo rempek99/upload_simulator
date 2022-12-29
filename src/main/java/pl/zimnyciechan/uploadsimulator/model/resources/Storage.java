@@ -18,11 +18,27 @@ public class Storage {
         this.filesCollection.addAll(files);
     }
 
-    public void upload(Set<FileResource> files) {
-        this.filesCollection.addAll(files);
+    public void upload(FileResource file) {
+        this.filesCollection.add(file);
     }
 
     public Set<FileResource> getFilesCollection() {
         return new LinkedHashSet<>(filesCollection);
+    }
+
+    public FileResource getFirstFile() {
+        Iterator<FileResource> iterator = filesCollection.iterator();
+        if (iterator.hasNext()) {
+            return iterator.next();
+        }
+        return null;
+    }
+
+    public void deleteFile(FileResource file) {
+        filesCollection.remove(file);
+    }
+
+    public boolean isEmpty() {
+        return filesCollection.isEmpty();
     }
 }
