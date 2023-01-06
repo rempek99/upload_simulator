@@ -1,7 +1,6 @@
 package pl.zimnyciechan.uploadsimulator.service;
 
 import lombok.Setter;
-import pl.zimnyciechan.uploadsimulator.actions.UploadFileAction;
 import pl.zimnyciechan.uploadsimulator.model.objects.Client;
 import pl.zimnyciechan.uploadsimulator.model.objects.Drive;
 
@@ -14,16 +13,21 @@ public class UploadManager {
     private static UploadManager instance;
     private Set<UploadFileAction> actionSet = new HashSet<>();
 
-    UploadWatcher watcher;
+    private final UploadWatcher watcher;
     private int actionCounter = 0;
 
     public UploadManager() {
         watcher = new UploadWatcher();
-        watcher.start();
+//        watcher.start();
     }
 
     public void stopWatcher() {
         watcher.setRunning(false);
+    }
+
+    public void startWatcher() {
+        watcher.setRunning(true);
+        watcher.start();
     }
 
     public static UploadManager getInstance() {
@@ -61,7 +65,6 @@ public class UploadManager {
         @Override
         public void run() {
             while (running) {
-                DriveManager.getInstance().printDrivesState();
                 if (UploadManager.getInstance().actionSet.size() < 5) {
                     UploadManager.getInstance().addClientToUpload();
                 }
@@ -72,10 +75,6 @@ public class UploadManager {
                     if (!action.isAlive()) {
                         iterator.remove();
                         action.getReciever().setBusy(false);
-//                        Client sender = action.getSender();
-//                        if (!sender.getStorage().isEmpty()) {
-//                            QueueManager.getInstance().addClientToQueue(sender);
-//                        }
                     }
                 }
                 try {

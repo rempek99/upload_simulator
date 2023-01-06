@@ -1,4 +1,4 @@
-package pl.zimnyciechan.uploadsimulator.actions;
+package pl.zimnyciechan.uploadsimulator.service;
 
 import lombok.Getter;
 import pl.zimnyciechan.uploadsimulator.model.objects.AbstractDevice;

@@ -36,7 +36,8 @@ public class DriveManager {
         return null;
     }
 
-    public void printDrivesState() {
-        System.out.println(driveSet);
+    @Override
+    public String toString() {
+        return driveSet.toString();
     }
 }
