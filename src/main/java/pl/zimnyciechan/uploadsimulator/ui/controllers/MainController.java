@@ -76,11 +76,27 @@ public class MainController implements Initializable {
                         new FileResource("file4", 54.0),
                         new FileResource("file5", 61.0),
                         new FileResource("file6", 110.0)))));
-        queueManager.addClientToQueue(new Client("test2", new Storage(Set.of(
+        queueManager.addClientToQueue(new Client("tester2", new Storage(Set.of(
                 new FileResource("file11", 320.0),
                 new FileResource("file12", 10.0),
                 new FileResource("file13", 51.0),
                 new FileResource("file14", 81.0)))));
+        queueManager.addClientToQueue(new Client("tester3",
+                new Storage(Set.of(
+                        new FileResource("file1", 120.0),
+                        new FileResource("file2", 61.0),
+                        new FileResource("file3", 80.0),
+                        new FileResource("file4", 44.0),
+                        new FileResource("file5", 11.0),
+                        new FileResource("file6", 910.0)))));
+        queueManager.addClientToQueue(new Client("tester4",
+                new Storage(Set.of(
+                        new FileResource("file1", 220.0),
+                        new FileResource("file2", 65.0),
+                        new FileResource("file3", 42.0),
+                        new FileResource("file4", 124.0),
+                        new FileResource("file5", 59.0),
+                        new FileResource("file6", 170.0)))));
 
 
         ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();

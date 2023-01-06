@@ -47,7 +47,7 @@ public class UploadFileAction extends Thread {
         fullFileSize = fileToSend.getSize();
         synchronized (reciever) {
             info = String.format("[%s] Sending file: '%s' from: %s  to: %s ...%n", getName(), fileToSend.getName(), sender.getName(), reciever.getName());
-            printInfo();
+//            printInfo();
             while (uploadedFileSize < fullFileSize) {
                 try {
                     Thread.sleep(TIME_TICK);

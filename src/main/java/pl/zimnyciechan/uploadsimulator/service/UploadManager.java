@@ -75,7 +75,7 @@ public class UploadManager {
                 Iterator<UploadFileAction> iterator = UploadManager.getInstance().actionSet.iterator();
                 while (iterator.hasNext()) {
                     UploadFileAction action = iterator.next();
-                    action.printInfo();
+//                    action.printInfo();
                     if (!action.isAlive()) {
                         iterator.remove();
                         action.getReciever().setBusy(false);
