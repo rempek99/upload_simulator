@@ -4,17 +4,17 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="1045.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.zimnyciechan.uploadsimulator.ui.controllers.MainController">
-    <bottom>
-        <Button mnemonicParsing="false" onAction="#buttonClick" text="Button" BorderPane.alignment="CENTER" />
-    </bottom>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="494.0" prefWidth="1045.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.zimnyciechan.uploadsimulator.ui.controllers.MainController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
@@ -95,4 +95,15 @@
         </items>
       </SplitPane>
    </center>
+   <bottom>
+      <HBox prefHeight="32.0" prefWidth="1045.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button mnemonicParsing="false" onMouseClicked="#handleStartSimulation" text="Start" />
+            <Separator opacity="0.0" prefHeight="27.0" prefWidth="554.0" />
+            <TextField fx:id="clientNameInput" promptText="Client Name" />
+            <TextField fx:id="fileSizeInput" promptText="File Size" />
+            <Button mnemonicParsing="false" onMouseClicked="#handleAddNewClient" text="Add client to queue" />
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>

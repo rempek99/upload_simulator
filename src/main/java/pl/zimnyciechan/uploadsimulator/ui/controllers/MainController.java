@@ -1,14 +1,14 @@
 package pl.zimnyciechan.uploadsimulator.ui.controllers;
 
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import pl.zimnyciechan.uploadsimulator.model.objects.Client;
 import pl.zimnyciechan.uploadsimulator.model.resources.FileResource;
 import pl.zimnyciechan.uploadsimulator.model.resources.Storage;
-import pl.zimnyciechan.uploadsimulator.service.DriveManager;
 import pl.zimnyciechan.uploadsimulator.service.QueueManager;
 import pl.zimnyciechan.uploadsimulator.service.UploadFileAction;
 import pl.zimnyciechan.uploadsimulator.service.UploadManager;
@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 public class MainController implements Initializable {
 
     private static final long REFRESH_RATE = 500;
+
     @FXML
     private TableView<Client> queueTable;
 
@@ -35,9 +36,34 @@ public class MainController implements Initializable {
     private final UploadManager uploadManager = UploadManager.getInstance();
 
     @FXML
-    public void buttonClick(ActionEvent actionEvent) {
+    public void handleStartSimulation(MouseEvent actionEvent) {
 //        queueManager.addClientToQueue(new Client("tester_new", new Storage()));
         uploadManager.startUploading();
+    }
+
+    @FXML
+    public TextField clientNameInput;
+
+    @FXML
+    public TextField fileSizeInput;
+
+    @FXML
+    public void handleAddNewClient(MouseEvent actionEvent) {
+        Double fileSize = 0.0;
+        try {
+            fileSize = Double.parseDouble(fileSizeInput.getText());
+        } catch (NumberFormatException ex) {
+            System.out.println("Wrong double format!");
+            return;
+        }
+        String clientName = clientNameInput.getText();
+        if (clientName.isEmpty()) {
+            System.out.println("Empty Client name!");
+            return;
+        }
+        Storage storage = new Storage(Set.of(new FileResource("file", fileSize)));
+        Client client = new Client(clientName, storage);
+        queueManager.addClientToQueue(client);
     }
 
     @Override
