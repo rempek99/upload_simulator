@@ -1,6 +1,7 @@
 package pl.zimnyciechan.uploadsimulator.service;
 
 import lombok.Getter;
+import lombok.Setter;
 import pl.zimnyciechan.uploadsimulator.model.objects.AbstractDevice;
 import pl.zimnyciechan.uploadsimulator.model.objects.Client;
 import pl.zimnyciechan.uploadsimulator.model.objects.Drive;
@@ -19,6 +20,15 @@ public class UploadFileAction extends Thread {
     @Getter
     private final Drive reciever;
 
+    @Getter
+    private String fileName;
+
+    @Getter
+    private Double fullFileSize;
+
+    @Getter
+    private Double uploadedFileSize = 0.0;
+
     private String info;
 
     public UploadFileAction(String name, Client sender, Drive reciever) {
@@ -32,18 +42,20 @@ public class UploadFileAction extends Thread {
     public void run() {
 //        reciever.setBusy(true);
         final FileResource fileToSend = sender.getStorage().getFirstFile();
-        double sended = 0.0;
+        sender.getStorage().deleteFile(fileToSend);
+        fileName = fileToSend.getName();
+        fullFileSize = fileToSend.getSize();
         synchronized (reciever) {
             info = String.format("[%s] Sending file: '%s' from: %s  to: %s ...%n", getName(), fileToSend.getName(), sender.getName(), reciever.getName());
             printInfo();
-            while (sended < fileToSend.getSize()) {
+            while (uploadedFileSize < fullFileSize) {
                 try {
                     Thread.sleep(TIME_TICK);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                sended += SIZE_PER_TICK;
-                info = String.format("[%s] Sended %s / %s ...%n", getName(), sended, fileToSend.getSize());
+                uploadedFileSize += SIZE_PER_TICK;
+                info = String.format("[%s] Sended %s / %s ...%n", getName(), uploadedFileSize, fileToSend.getSize());
             }
             reciever.getStorage().upload(fileToSend);
             sender.getStorage().deleteFile(fileToSend);
@@ -56,5 +68,17 @@ public class UploadFileAction extends Thread {
         if (info != null) {
             System.out.println(info);
         }
+    }
+
+    public String getRecieverName() {
+        return reciever.getName();
+    }
+
+    public String getSenderName() {
+        return sender.getName();
+    }
+
+    public String getUploaded() {
+        return String.format("%s / %s", uploadedFileSize, fullFileSize);
     }
 }

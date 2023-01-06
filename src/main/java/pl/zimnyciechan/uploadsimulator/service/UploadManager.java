@@ -21,11 +21,11 @@ public class UploadManager {
 //        watcher.start();
     }
 
-    public void stopWatcher() {
+    public void stopUploading() {
         watcher.setRunning(false);
     }
 
-    public void startWatcher() {
+    public void startUploading() {
         watcher.setRunning(true);
         watcher.start();
     }
@@ -35,6 +35,10 @@ public class UploadManager {
             instance = new UploadManager();
         }
         return instance;
+    }
+
+    public Set<UploadFileAction> getActionSet() {
+        return new HashSet<>(actionSet);
     }
 
     public void addClientToUpload() {

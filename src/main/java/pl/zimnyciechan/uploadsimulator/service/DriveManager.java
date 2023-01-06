@@ -36,6 +36,10 @@ public class DriveManager {
         return null;
     }
 
+    public Set<Drive> getDriveSet() {
+        return new HashSet<>(driveSet);
+    }
+
     @Override
     public String toString() {
         return driveSet.toString();
